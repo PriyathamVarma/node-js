@@ -11,4 +11,10 @@ console.log(__filename);
 
 //process object --> process.argv
 
-console.log(process.argv)
+console.log(process.argv) // this is an array
+
+//use array destructucting
+
+const [, , firstname, lastname] = process.argv
+
+console.log(firstname)
