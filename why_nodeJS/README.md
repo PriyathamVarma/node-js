@@ -47,4 +47,17 @@ fs.writeFileSync('./sample.txt',writeTxt);// this will overwrite the info
 
 ## Blocking and Non-Blocking
   
+- Blocking: Step-wise codes get executed
+- This means step2 can only exit if step1 is done  
+- Non-Blocking: No need for waiting for the function to finish execute
   
+### Non-Blocking version
+  
+```
+  // Non-Blocking version
+fs.readFile('./sample.txt','utf-8',(err,res)=>{
+    console.log(res);
+})
+  ```
+  
+> Here the fs method is calling another function(call back) and returns the value when the execution is done  
