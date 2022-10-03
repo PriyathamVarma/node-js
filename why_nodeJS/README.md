@@ -67,3 +67,19 @@ fs.writeFile('./sample.txt','Node Js rocks',(err)=>{
   ```
   
 > Here the fs method is calling another function(call back) and returns the value when the execution is done  
+
+### Creating a server
+
+```
+// Server
+// Create server
+// Start server to listen to reqs
+const server = http.createServer((req,res)=>{
+    res.end("the server says hai");
+});
+
+
+server.listen(8080,()=>{
+    console.log(`http://localhost:8080/`)
+});
+```
