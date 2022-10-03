@@ -71,6 +71,14 @@ fs.writeFile('./sample.txt','Node Js rocks',(err)=>{
 ### Creating a server
 
 ```
+// This file is for creating a simple web server
+// Imports
+const http = require('http');
+
+// Files
+
+
+
 // Server
 // Create server
 // Start server to listen to reqs
@@ -82,4 +90,5 @@ const server = http.createServer((req,res)=>{
 server.listen(8080,()=>{
     console.log(`http://localhost:8080/`)
 });
+  
 ```
