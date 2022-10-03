@@ -58,6 +58,12 @@ fs.writeFileSync('./sample.txt',writeTxt);// this will overwrite the info
 fs.readFile('./sample.txt','utf-8',(err,res)=>{
     console.log(res);
 })
+  
+  // Writing using callbacks
+fs.writeFile('./sample.txt','Node Js rocks',(err)=>{
+    if (err) throw err;
+    console.log('Text added....');
+})
   ```
   
 > Here the fs method is calling another function(call back) and returns the value when the execution is done  
