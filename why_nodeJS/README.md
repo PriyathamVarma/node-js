@@ -136,7 +136,7 @@ server.listen(8080,()=>{
 ### APIs
   
   ```
-  // this file is for creating a simple web server
+// This file is for creating a simple web server
 // Imports
 const fs = require('fs');
 const http = require('http');
@@ -160,11 +160,16 @@ const server = http.createServer((req,res)=>{
         //fs.readFile('./data.json');// Instead of ./ we can use --dirname
         fs.readFile(`${__dirname}/data.json`,'utf-8',(err,data)=>{
             // Parse the string to object
-            if(err) throw error;
+            if(err){
+                console.log(err);
+            };
             const dataObj = JSON.parse(data);
             console.log(dataObj);
+            res.writeHead(200,{
+                'Content-type':'application/json',
+            });
+            res.end(data);// here it is data which is the string that should be rendered
         });
-        res.end("API");
     }
     else{
         res.writeHead(404,{
@@ -184,3 +189,55 @@ server.listen(8080,()=>{
 
   
   ```
+
+  ### Optimising the code
+  
+  ```
+  // This file is for creating a simple web server
+// Imports
+const fs = require('fs');
+const http = require('http');
+
+// Files
+
+// Having apis data
+const reqData = fs.readFileSync(`${__dirname}/data.json`,'utf-8');// Only should be rendered once the object is called
+const dataObj = JSON.parse(reqData);
+
+
+// Server
+// Create server
+// Start server to listen to reqs
+const server = http.createServer((req,res)=>{
+    console.log(req.url);// to capture the url
+    const path = req.url;
+
+    if(path === '/main'){
+        res.end("You are in main");
+    }
+    else if(path === '/api'){
+
+            res.writeHead(200,{
+                'Content-type':'application/json',
+            });
+
+            res.end(reqData);// here it is data which is the string that should be rendered
+        }
+    else{
+        res.writeHead(404,{
+
+            'Content-type':'text/html',
+
+        });// 404 is the status code for page not found
+        res.end("<h1>Page Not found</h1>");
+    }
+    
+});
+
+
+server.listen(8080,()=>{
+    console.log(`http://localhost:8080/`)
+});
+
+  ```
+  
