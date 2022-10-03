@@ -244,7 +244,7 @@ server.listen(8080,()=>{
   - sample.html
   
   ```
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <title>HTML Templating</title>
@@ -254,6 +254,7 @@ server.listen(8080,()=>{
         <div>
 
             <h1>name: {%NAME%}</h1>
+            <p>age: {%AGE%}</p>
 
         </div>
         
@@ -262,5 +263,66 @@ server.listen(8080,()=>{
   
   ```
  - server.js
+  
+  ```
+  // This file is for creating a simple web server
+// Imports
+const fs = require('fs');
+const http = require('http');
+
+// Files
+
+const replaceTemplate = (arg1,arg2) =>{
+
+    let output = arg1.replace(/{%NAME%}/g,arg2.name);
+    // mutate let variable again
+    output.replace(/{%AGE%}/g,arg2.age);
+
+    return output;
+}
+
+// Having apis data
+const reqData = fs.readFileSync(`${__dirname}/data.json`,'utf-8');// Only should be rendered once the object is called
+const dataObj = JSON.parse(reqData);
+
+// reading html files
+const reqHTMLData = fs.readFileSync(`${__dirname}/sample.html`,'utf-8');
+
+// Server
+// Create server
+// Start server to listen to reqs
+const server = http.createServer((req,res)=>{
+    console.log(req.url);// to capture the url
+    const path = req.url;
+
+    if(path === '/page'){
+
+        res.writeHead(200,{
+            'Content-type':'text/html',
+        });
+
+        const renderHTML = dataObj.map(el => replaceTemplate(reqHTMLData,el)).join('');// With join all strings are joined
+        console.log(renderHTML);
+
+        res.end(renderHTML);
+    }
+    else{
+        res.writeHead(404,{
+
+            'Content-type':'text/html',
+
+        });// 404 is the status code for page not found
+        res.end("<h1>Page Not found</h1>");
+    }
+    
+});
+
+
+server.listen(8080,()=>{
+    console.log(`http://localhost:8080/`)
+});
+
+  
+  ```
   
   
