@@ -23,4 +23,26 @@
 - ebay
 
 
+### Example showing how to read or write to a file using nodejs
+
+```
+// This file is for showing examples on file reading and writing
+
+// Import fileSync package 
+const fs = require('fs');
+
+// Reading synchronously
+const txt = fs.readFileSync('./sample.txt','utf-8'); // The content from sample.txt will be read by NodeJS
+
+// console log the vraible
+console.log(txt);
+
+
+// Writing to the files
+const writeTxt = 'Write something and show it';
+fs.writeFileSync('./sample.txt',writeTxt);// this will overwrite the info
+
+```
+
+
 
