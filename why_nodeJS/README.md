@@ -43,6 +43,8 @@ const writeTxt = 'Write something and show it';
 fs.writeFileSync('./sample.txt',writeTxt);// this will overwrite the info
 
 ```
+> Run node <filename> on your CLi to run the file
 
-
-
+## Blocking and Non-Blocking
+  
+  
