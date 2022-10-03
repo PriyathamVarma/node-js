@@ -486,6 +486,19 @@ server.listen(8080,()=>{
 
   ```
  
- 
+ ### Creating own modules
+  
+  ```
+  module.exports = (arg1,arg2) =>{
+
+    let output = arg1.replace(/{%NAME%}/g,arg2.name);
+    // mutate let variable again
+   output = output.replace(/{%AGE%}/g,arg2.age);
+
+    return output;
+}
+  ```
+  
+  > The baove code can be imported as cont replaceTemplate = require(file path);
   
   
