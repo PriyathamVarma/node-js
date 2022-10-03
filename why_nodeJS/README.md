@@ -96,13 +96,11 @@ server.listen(8080,()=>{
 ### Routing
   
 ```
-  // this file is for creating a simple web server
+// This file is for creating a simple web server
 // Imports
 const http = require('http');
 
 // Files
-
-
 
 // Server
 // Create server
@@ -118,8 +116,12 @@ const server = http.createServer((req,res)=>{
         res.end("You are in index");
     }
     else{
-        res.writeHead('404');
-        res.end("Page not found");
+        res.writeHead(404,{
+
+            'Content-type':'text/html',
+
+        });// 404 is the status code for page not found
+        res.end("<h1>Page Not found</h1>");
     }
     
 });
@@ -128,5 +130,6 @@ const server = http.createServer((req,res)=>{
 server.listen(8080,()=>{
     console.log(`http://localhost:8080/`)
 });
+
 
  ```
