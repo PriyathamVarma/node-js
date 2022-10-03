@@ -92,3 +92,41 @@ server.listen(8080,()=>{
 });
   
 ```
+  
+### Routing
+  
+```
+  // this file is for creating a simple web server
+// Imports
+const http = require('http');
+
+// Files
+
+
+
+// Server
+// Create server
+// Start server to listen to reqs
+const server = http.createServer((req,res)=>{
+    console.log(req.url);// to capture the url
+    const path = req.url;
+
+    if(path === '/main'){
+        res.end("You are in main");
+    }
+    else if(path === '/index'){
+        res.end("You are in index");
+    }
+    else{
+        res.writeHead('404');
+        res.end("Page not found");
+    }
+    
+});
+
+
+server.listen(8080,()=>{
+    console.log(`http://localhost:8080/`)
+});
+
+ ```
