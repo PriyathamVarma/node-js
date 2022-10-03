@@ -499,6 +499,6 @@ server.listen(8080,()=>{
 }
   ```
   
-  > The baove code can be imported as cont replaceTemplate = require(file path);
+  > The above code can be imported as cont replaceTemplate = require(file path);
   
   
