@@ -133,3 +133,54 @@ server.listen(8080,()=>{
 
 
  ```
+### APIs
+  
+  ```
+  // this file is for creating a simple web server
+// Imports
+const fs = require('fs');
+const http = require('http');
+
+// Files
+
+
+
+// Server
+// Create server
+// Start server to listen to reqs
+const server = http.createServer((req,res)=>{
+    console.log(req.url);// to capture the url
+    const path = req.url;
+
+    if(path === '/main'){
+        res.end("You are in main");
+    }
+    else if(path === '/api'){
+        // get the data from data.json
+        //fs.readFile('./data.json');// Instead of ./ we can use --dirname
+        fs.readFile(`${__dirname}/data.json`,'utf-8',(err,data)=>{
+            // Parse the string to object
+            if(err) throw error;
+            const dataObj = JSON.parse(data);
+            console.log(dataObj);
+        });
+        res.end("API");
+    }
+    else{
+        res.writeHead(404,{
+
+            'Content-type':'text/html',
+
+        });// 404 is the status code for page not found
+        res.end("<h1>Page Not found</h1>");
+    }
+    
+});
+
+
+server.listen(8080,()=>{
+    console.log(`http://localhost:8080/`)
+});
+
+  
+  ```
