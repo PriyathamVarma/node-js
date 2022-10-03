@@ -190,7 +190,7 @@ server.listen(8080,()=>{
   
   ```
 
-  ### Optimising the code
+  ### Optimising the code:APIs
   
   ```
   // This file is for creating a simple web server
@@ -240,4 +240,27 @@ server.listen(8080,()=>{
 });
 
   ```
+ ### HTML templating
+  - sample.html
+  
+  ```
+    <!DOCTYPE html>
+<html>
+    <head>
+        <title>HTML Templating</title>
+    </head>
+
+    <body>
+        <div>
+
+            <h1>name: {%NAME%}</h1>
+
+        </div>
+        
+    </body>
+</html>
+  
+  ```
+ - server.js
+  
   
