@@ -325,4 +325,97 @@ server.listen(8080,()=>{
   
   ```
   
+ ### URL parsing
+ > To get the params of a URL
+ > enter localhost:8080/api?id=1
+ 
+ ```
+ // This file is for creating a simple web server
+// Imports
+const fs   = require('fs');
+const http = require('http');
+const url  = require('url');
+
+// Files
+
+const replaceTemplate = (arg1,arg2) =>{
+
+    let output = arg1.replace(/{%NAME%}/g,arg2.name);
+    // mutate let variable again
+   output = output.replace(/{%AGE%}/g,arg2.age);
+
+    return output;
+}
+
+// Having apis data
+const reqData = fs.readFileSync(`${__dirname}/data.json`,'utf-8');// Only should be rendered once the object is called
+const dataObj = JSON.parse(reqData);
+
+// reading html files
+const reqHTMLData = fs.readFileSync(`${__dirname}/sample.html`,'utf-8');
+
+// Server
+// Create server
+// Start server to listen to reqs
+const server = http.createServer((req,res)=>{
+    console.log(req.url);// to capture the url
+    console.log("Check point 1");
+
+    // To get the url params
+    const parsed = url.parse(req.url,true);
+    
+    console.log(parsed);
+
+
+    const path = req.url;
+
+    if(path === '/page'){
+
+        res.writeHead(200,{
+            'Content-type':'text/html',
+        });
+
+        const renderHTML = dataObj.map(el => replaceTemplate(reqHTMLData,el)).join('');// With join all strings are joined
+        console.log(renderHTML);
+
+        res.end(renderHTML);
+    }
+    else{
+        res.writeHead(404,{
+
+            'Content-type':'text/html',
+
+        });// 404 is the status code for page not found
+        res.end("<h1>Page Not found</h1>");
+    }
+    
+});
+
+
+server.listen(8080,()=>{
+    console.log(`http://localhost:8080/`)
+});
+
+```
+> RResult:
+```
+Url {
+  protocol: null,
+  slashes: null,
+  auth: null,
+  host: null,
+  port: null,
+  hostname: null,
+  hash: null,
+  search: '?id=1',
+  query: [Object: null prototype] { id: '1' },
+  pathname: '/api',
+  path: '/api?id=1',
+  href: '/api?id=1'
+}
+```
+
+ 
+ 
+  
   
