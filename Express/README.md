@@ -19,6 +19,29 @@
 
 > Create the index.js file for creating the express code
 
+> Basic Body for Express app
+
+```
+// This file is for creating an Express Server
+
+// Imports
+const express = require('express');
+const app = express();
+const PORT = 8080;
+
+console.log(app);
+
+app.listen(PORT,()=>{
+    console.log(`http://localhost:8080/`);
+})
+
+```
+
+### Routing
+
+
+
+
 
 
 
