@@ -4,25 +4,21 @@
 const express = require('express');
 const app = express();
 const PORT = 8080;
-
-// Data
-const msg = {
-
-    name : 'varma',
-    age  : 29,
-    Profession: 'Course Director'
-
-}
+// File management
+const fs = require('fs');
+// API data
+const namesData = fs.readFileSync(`${__dirname}/api/names.json`,'utf-8');
+const parsedData = JSON.parse(namesData);
 
 // ROUTING
 // URL ---> /
-app.get('/',(req,res)=>{
-    res.send('You entered /');
-});
-
-app.get('/new',(req,res)=>{
-    //res.status(200).send(msg);// this cant work bcoz you can send only JSON or text or HTML
-    res.status(200).json(msg);
+app.get('/api/v1/names',(req,res)=>{
+    res.status(200).json({
+        status:'Success',
+        data:{
+            parsedData
+        }
+    });
 });
 
 // POST

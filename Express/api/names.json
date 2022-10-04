@@ -1,0 +1,21 @@
+[
+    {
+        "name":"varma",
+        "age":29,
+        "profession":"Course director",
+        "Country":"UK"
+    },
+    {
+        "name":"sneha",
+        "age":29,
+        "profession":"Associate",
+        "Country":"India"
+    },
+    {
+        "name":"V",
+        "age":29,
+        "profession":"Course director web3",
+        "Country":"Norwich"
+    }
+
+]
