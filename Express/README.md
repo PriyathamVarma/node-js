@@ -13,6 +13,71 @@
 
 ### Setting up basic express server
 
+> npm init
+
+> npm i express
+
+> Create the index.js file for creating the express code
+
+> Basic Body for Express app
+
+```
+// This file is for creating an Express Server
+
+// Imports
+const express = require('express');
+const app = express();
+const PORT = 8080;
+
+console.log(app);
+
+app.listen(PORT,()=>{
+    console.log(`http://localhost:8080/`);
+})
+
+```
+
+### Routing
+
+```
+// This file is for creating an Express Server
+
+// Imports
+const express = require('express');
+const app = express();
+const PORT = 8080;
+
+// Data
+const msg = {
+
+    name : 'varma',
+    age  : 29,
+    Profession: 'Course Director'
+
+}
+
+// ROUTING
+// URL ---> /
+app.get('/',(req,res)=>{
+    res.send('You entered /');
+});
+
+app.get('/new',(req,res)=>{
+    //res.status(200).send(msg);// this cant work bcoz you can send only JSON or text or HTML
+    res.status(200).json(msg);
+})
+
+app.listen(PORT,()=>{
+    console.log(`http://localhost:8080/`);
+})
+
+```
+
+
+
+
+
+
 
 
 
