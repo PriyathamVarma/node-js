@@ -1,0 +1,1 @@
+# This file is for explaining MongoDB in an easy and understandable way
