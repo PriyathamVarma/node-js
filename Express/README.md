@@ -13,5 +13,13 @@
 
 ### Setting up basic express server
 
+> npm init
+
+> npm i express
+
+> Create the index.js file for creating the express code
+
+
+
 
 
