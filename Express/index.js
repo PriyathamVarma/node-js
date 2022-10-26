@@ -26,19 +26,25 @@ app.get('/api/v1/names',(req,res)=>{
 // POST
 app.post('/api/v1/names',(req,res)=>{
 
+    // We need app.use(express.json()) middleware to post the data
+    /*const first = {x: 1, y: 2, z: 3};  
+    const second = Object.assign({x: 3, z: 4, w: 5}, first); */ 
 
-    const newData = Object.assign({name:"new name",age:10,profession:"Who cares",Country:"International"},res.body);
+    //const dataToBeInserted = {id:4,name:"New naming",profession:"Not yet decided",Country:"UK"};
+    const _id = namesData.length-1; 
+    const newData = Object.assign({id:_id},req.body);
+
+    // Adding the data
     parsedData.push(newData);
-    fs.writeFile(`${__dirname}/api/names.json`,JSON.stringify(parsedData),()=>{
-        res.status(200).json({
 
-            status:'Success',
-            data:{
-                newData
-            }
-
-        })
-        
+    // Writing to the data
+    //fs.writeFile(path,content,err =>{});
+    fs.writeFile(`./api/names.json`,JSON.stringify(parsedData),err=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send('Done');
+        }
     });
 
     
