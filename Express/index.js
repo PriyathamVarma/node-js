@@ -7,6 +7,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
+// W3name
+const Name = require('w3name');
+
 // Environment variable
 const dotenv = require('dotenv');
 dotenv.config({path:'./.env'});
@@ -21,6 +24,14 @@ const fs = require('fs');
 // API data
 const namesData = fs.readFileSync(`${__dirname}/api/names.json`,'utf-8');
 const parsedData = JSON.parse(namesData);
+
+// Keys data
+const keys = fs.readFileSync(`${__dirname}/keys/keys.json`,'utf-8');
+const parsedKeys = JSON.parse(keys);
+
+// Revision data
+const revision = fs.readFileSync(`${__dirname}/keys/revision.json`,'utf-8');
+const parsedRevision = JSON.parse(revision);
 
 // Middleware
 app.use(express.json())
@@ -188,12 +199,95 @@ app.delete('/db/delete/:id',async(req,res)=>{
 
 });
 
+// IPNS
+
+// w3names keys
+// create name
+app.get('/name/create',async(req,res)=>{
+
+    const name = await Name.create();
+
+    parsedKeys.push(name.key.bytes);
+
+    // Writing to the data
+    //fs.writeFile(path,content,err =>{});
+    fs.writeFile(`./keys/keys.json`,JSON.stringify(parsedKeys),err=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send('Done');
+        }
+    });
+
+
+});
+
+// publish content
+app.get('/name/publish', async(req,res)=>{
+
+    // value is an IPFS path to the content we want to publish
+    const value = '/ipfs/bafybeicibiahb2rnglejmzexodmtfjrns6opvwtafwvgwnaic4sgfw6lde';
+
+    // Get the name from bytes data
+    const name = await Name.from(parsedKeys[0].data);
+
+    // since we don't have a previous revision, we use Name.v0 to create the initial revision
+    const revisionZero = await Name.v0(name, value);
+
+    console.log(revisionZero);
+
+    
+            Name.publish(revisionZero, name.key).then(res =>{
+                console.log("Success");
+            }).catch(err =>{
+                console.log(err);
+            });
+        
+
+
+});
+
+// Revision
+app.get('/name/revision',async(req,res)=>{
+
+    const nextValue = '/ipfs/bafybeidjazgigbiflpjymy2uw33ybbp7vpt5zxhkrklu44cj7vk5rcrrhy';
+
+    // Get the name from bytes data
+    const name = await Name.from(parsedKeys[0].data);
+
+    // Latest revision
+    const revision = await Name.resolve(name);
+
+    // Make a revision to the current record (increments sequence number and sets value)
+    const nextRevision = await Name.increment(revision, nextValue);
+
+    Name.publish(nextRevision, name.key).then(res =>{
+        console.log("Success");
+    }).catch(err =>{
+        console.log(err);
+    });
+
+
+});
+
+// latest
+app.get('/name/latest',async(req,res)=>{
+
+    // Get the name from bytes data
+    const name = await Name.from(parsedKeys[0].data);
+
+    // Latest revision
+    const revision = await Name.resolve(name);
+
+    console.log(revision);
+
+    console.log(name.toString());
+
+
+})
 
 
 app.listen(PORT,()=>{
-    console.log(process.env.PORT);
-    console.log(process.env.DATABASE);
-    console.log(process.env.DATABASE_LOCAL);
     console.log('..............');
     console.log(`http://localhost:${PORT}/`);
 });
